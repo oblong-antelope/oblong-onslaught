@@ -36,23 +36,18 @@ app.post('/', function(req, res) {
 
 
     var REQUEST_TIMER = setInterval(function(){
-        if((dss.length>10 && REQUEST_EPOCH>4)||(dss.length>50 && REQUEST_EPOCH>3)){
-            res.header('Access-Control-Allow-Origin', '*');
-            res.header('Access-Control-Allow-Methods', 'POST');
-            res.set('Content-Type', 'text/plain');
-            res.send(JSON.stringify({
-                datasets: dss
-            }));
+        if((DATASET.length>10 && REQUEST_EPOCH>4)||(DATASET.length>50 && REQUEST_EPOCH>3)){
+            formDataSets(res);
             clearInterval(REQUEST_TIMER);
         }
         REQUEST_EPOCH++;
-        console.log('request epoch ' + EPOCHS_WAITED + ' AND DSS LENGTH IS ' + dss.length);
+        console.log('request epoch ' + REQUEST_EPOCH + ' AND DATASET LENGTH IS ' + DATASET.length);
     }, EPOCH_TIME);
 
 
 });
 
-function formDataSets(){
+function formDataSets(res){
     var j = 0;
 
     for(var i=0; i<DATASET.length; i++){
@@ -70,6 +65,13 @@ function formDataSets(){
         };
         j++;
     }
+
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Methods', 'POST');
+    res.set('Content-Type', 'text/plain');
+    res.send(JSON.stringify({
+        datasets: dss
+    }));
 }
 
 
@@ -134,7 +136,6 @@ function addDataSetGroupByHash(dotColor, xOrigin, yOrigin){
         hSet.delete(link);
     });
     CURRENT_GROUP++;
-    formDataSets();
 }
 
 function generateRandomColour(){
