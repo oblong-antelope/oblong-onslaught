@@ -57,10 +57,15 @@ function formDataSets(res){
             data:[{
                 x:DATASET[i].x,
                 y:DATASET[i].y,
-                r:DATASET[i].r,
-                idx:DATASET[i].idx
+                r:DATASET[i].r
             }],
-            backgroundColor:DATASET[i].backgroundColor
+            backgroundColor:DATASET[i].backgroundColor,
+            idx:DATASET[i].idx,
+            department: DATASET[i].department,
+            firstname: DATASET[i].firstname,
+            surname: DATASET[i].surname,
+            title: DATASET[i].title,
+            initials: DATASET[i].initials
         };
         j++;
     }
@@ -158,7 +163,12 @@ function addDataSetGroupWithLink(dotColor, xOrigin, yOrigin, link, i){
                 y: yOrigin + 8*Math.random(),
                 r: 5 * Math.random() + 8,
                 backgroundColor: dotColor,
-                idx: link
+                idx: link,
+                department: parBody.department,
+                firstname: parBody.name.first,
+                surname: parBody.name.last,
+                title: parBody.name.title,
+                initials: parBody.name.initials
             };
             console.log(i);
         }catch(e){
