@@ -29,10 +29,10 @@ var ENTIRE_WORLD_SIZE_Y = 100;
 
 app.post('/', function(req, res) {
 
-    updatePrices(req.body.personIdx);
+    updatePrices(req.body.personIdx, res);
 });
 
-function formDataSets(){
+function formDataSets(res){
     ds = [];
     var j = 0;
 
@@ -63,7 +63,7 @@ function formDataSets(){
 
 
 var SERVER_ADDRESS = "https://oblong-adventures.herokuapp.com";
-function updatePrices(startIdx) {
+function updatePrices(startIdx, res) {
 
     addDataSetGroupByLinkReturnInterest('/api/people/'+startIdx);
 
@@ -71,7 +71,7 @@ function updatePrices(startIdx) {
         if(hSet.size>MAX_HASH-2 || EPOCHS_WAITED>MAX_EPOCH_WAIT){
             EPOCHS_WAITED = 0;
             clearInterval(HASH_ADD_TIMER);
-            addDataSetGroupByHash(generateRandomColour(), Math.random()*ENTIRE_WORLD_SIZE_Y, Math.random()*ENTIRE_WORLD_SIZE_X);
+            addDataSetGroupByHash(generateRandomColour(), Math.random()*ENTIRE_WORLD_SIZE_Y, Math.random()*ENTIRE_WORLD_SIZE_X, res);
         }
         EPOCHS_WAITED++;
         console.log('hset size is --------------' + hSet.size + ' --- epochs ' + EPOCHS_WAITED);
@@ -112,7 +112,7 @@ function getPeopleOfSimilarInterests(topicKeyword){
 }
 
 
-function addDataSetGroupByHash(dotColor, xOrigin, yOrigin){
+function addDataSetGroupByHash(dotColor, xOrigin, yOrigin, res){
     var i = 0;
     console.log('at adding pt' + hSet.size);
     hSet.forEach(function(link){
@@ -122,7 +122,7 @@ function addDataSetGroupByHash(dotColor, xOrigin, yOrigin){
         hSet.delete(link);
     });
     CURRENT_GROUP++;
-    formDataSets();
+    formDataSets(res);
 }
 
 function generateRandomColour(){
