@@ -13,13 +13,13 @@ app.use(bodyParser.json());
 var DATASET = [];
 var hSet = new Set();
 var MAX_HASH = 800;
-var MAX_EPOCH_WAIT = 3;
+var MAX_EPOCH_WAIT = 4;
 
 var EPOCHS_WAITED = 0;
 
 var TOTAL_GROUPS = 500;
 
-var EPOCH_TIME = 3000;
+var EPOCH_TIME = 2000;
 
 var ENTIRE_WORLD_SIZE_X = 60;
 var ENTIRE_WORLD_SIZE_Y = 100;
@@ -35,7 +35,7 @@ app.post('/', function(req, res) {
 
 
     var REQUEST_TIMER = setInterval(function(){
-        if((DATASET.length>5 && REQUEST_EPOCH>4)||(DATASET.length>20 && REQUEST_EPOCH>3)||(DATASET.length>60)){
+        if((DATASET.length>5 && REQUEST_EPOCH>3)||(DATASET.length>20 && REQUEST_EPOCH>2)||(DATASET.length>60)){
             formDataSets(res);
             clearInterval(REQUEST_TIMER);
         }
@@ -81,7 +81,7 @@ function updatePrices(startIdx) {
     addDataSetGroupByLinkReturnInterest('/api/people/'+startIdx);
 
     var HASH_ADD_TIMER = setInterval(function(){
-        if(hSet.size>30 || EPOCHS_WAITED>MAX_EPOCH_WAIT){
+        if((hSet.size>8 && EPOCHS_WAITED>MAX_EPOCH_WAIT) || (hSet.size>30)){
             EPOCHS_WAITED = 0;
             clearInterval(HASH_ADD_TIMER);
             addDataSetGroupByHash(generateRandomColour(), Math.random()*ENTIRE_WORLD_SIZE_Y, Math.random()*ENTIRE_WORLD_SIZE_X);
