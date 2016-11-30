@@ -29,14 +29,7 @@ var ENTIRE_WORLD_SIZE_Y = 100;
 
 app.post('/', function(req, res) {
 
-    var ds = updatePrices(req.body.personIdx);
-
-    res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Methods', 'POST');
-    res.set('Content-Type', 'text/plain');
-    res.send(JSON.stringify({
-        datasets: ds
-    }));
+    updatePrices(req.body.personIdx);
 });
 
 function formDataSets(){
@@ -58,7 +51,13 @@ function formDataSets(){
         };
         j++;
     }
-    return ds;
+
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Methods', 'POST');
+    res.set('Content-Type', 'text/plain');
+    res.send(JSON.stringify({
+        datasets: ds
+    }));
 }
 
 
@@ -72,7 +71,7 @@ function updatePrices(startIdx) {
         if(hSet.size>MAX_HASH-2 || EPOCHS_WAITED>MAX_EPOCH_WAIT){
             EPOCHS_WAITED = 0;
             clearInterval(HASH_ADD_TIMER);
-            return addDataSetGroupByHash(generateRandomColour(), Math.random()*ENTIRE_WORLD_SIZE_Y, Math.random()*ENTIRE_WORLD_SIZE_X);
+            addDataSetGroupByHash(generateRandomColour(), Math.random()*ENTIRE_WORLD_SIZE_Y, Math.random()*ENTIRE_WORLD_SIZE_X);
         }
         EPOCHS_WAITED++;
         console.log('hset size is --------------' + hSet.size + ' --- epochs ' + EPOCHS_WAITED);
@@ -123,7 +122,7 @@ function addDataSetGroupByHash(dotColor, xOrigin, yOrigin){
         hSet.delete(link);
     });
     CURRENT_GROUP++;
-    return formDataSets();
+    formDataSets();
 }
 
 function generateRandomColour(){
