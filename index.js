@@ -13,7 +13,7 @@ app.use(bodyParser.json());
 var DATASET = [];
 var hSet = new Set();
 var MAX_HASH = 800;
-var MAX_EPOCH_WAIT = 1;
+var MAX_EPOCH_WAIT = 0;// i.e. 5 seconds
 
 var EPOCHS_WAITED = 0;
 
@@ -25,6 +25,8 @@ var EPOCH_TIME = 5000;
 var ENTIRE_WORLD_SIZE_X = 60;
 var ENTIRE_WORLD_SIZE_Y = 100;
 
+var REQUEST_EPOCH = 0;
+
 var dss = [];
 
 
@@ -33,15 +35,17 @@ app.post('/', function(req, res) {
     updatePrices(req.body.personIdx);
 
 
-    var HASH_ADD_TIMER = setInterval(function(){
-        if((dss.length>10 && EPOCHS_WAITED>3)||(dss.length>50 && EPOCHS_WAITED>2)){
+    var REQUEST_TIMER = setInterval(function(){
+        if((dss.length>10 && REQUEST_EPOCH>4)||(dss.length>50 && REQUEST_EPOCH>3)){
             res.header('Access-Control-Allow-Origin', '*');
             res.header('Access-Control-Allow-Methods', 'POST');
             res.set('Content-Type', 'text/plain');
             res.send(JSON.stringify({
                 datasets: dss
             }));
+            clearInterval(REQUEST_TIMER);
         }
+        REQUEST_EPOCH++;
         console.log('request epoch ' + EPOCHS_WAITED + ' AND DSS LENGTH IS ' + dss.length);
     }, EPOCH_TIME);
 
