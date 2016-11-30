@@ -13,13 +13,13 @@ app.use(bodyParser.json());
 var DATASET = [];
 var hSet = new Set();
 var MAX_HASH = 800;
-var MAX_EPOCH_WAIT = 0;// i.e. 5 seconds
+var MAX_EPOCH_WAIT = 3;
 
 var EPOCHS_WAITED = 0;
 
 var TOTAL_GROUPS = 500;
 
-var EPOCH_TIME = 5000;
+var EPOCH_TIME = 3000;
 
 var ENTIRE_WORLD_SIZE_X = 60;
 var ENTIRE_WORLD_SIZE_Y = 100;
@@ -81,7 +81,7 @@ function updatePrices(startIdx) {
     addDataSetGroupByLinkReturnInterest('/api/people/'+startIdx);
 
     var HASH_ADD_TIMER = setInterval(function(){
-        if(hSet.size>MAX_HASH-2 || EPOCHS_WAITED>MAX_EPOCH_WAIT){
+        if(hSet.size>30 || EPOCHS_WAITED>MAX_EPOCH_WAIT){
             EPOCHS_WAITED = 0;
             clearInterval(HASH_ADD_TIMER);
             addDataSetGroupByHash(generateRandomColour(), Math.random()*ENTIRE_WORLD_SIZE_Y, Math.random()*ENTIRE_WORLD_SIZE_X);
