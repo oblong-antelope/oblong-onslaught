@@ -73,7 +73,7 @@ function updatePrices(startIdx) {
             EPOCHS_WAITED = 0;
             addDataSetGroupByHash(generateRandomColour(), Math.random()*ENTIRE_WORLD_SIZE_Y, Math.random()*ENTIRE_WORLD_SIZE_X);
             clearInterval(HASH_ADD_TIMER);
-            ds = formDataSets();
+            return formDataSets();
         }
         EPOCHS_WAITED++;
         console.log('hset size is --------------' + hSet.size + ' --- epochs ' + EPOCHS_WAITED);
