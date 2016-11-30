@@ -18,9 +18,8 @@ var MAX_EPOCH_WAIT = 0;// i.e. 5 seconds
 var EPOCHS_WAITED = 0;
 
 var TOTAL_GROUPS = 500;
-var CURRENT_GROUP = 0;
 
-var EPOCH_TIME = 5000;
+var EPOCH_TIME = 3000;
 
 var ENTIRE_WORLD_SIZE_X = 60;
 var ENTIRE_WORLD_SIZE_Y = 100;
@@ -36,7 +35,7 @@ app.post('/', function(req, res) {
 
 
     var REQUEST_TIMER = setInterval(function(){
-        if((DATASET.length>10 && REQUEST_EPOCH>4)||(DATASET.length>50 && REQUEST_EPOCH>3)){
+        if((DATASET.length>5 && REQUEST_EPOCH>4)||(DATASET.length>20 && REQUEST_EPOCH>3)||(DATASET.length>60)){
             formDataSets(res);
             clearInterval(REQUEST_TIMER);
         }
@@ -135,7 +134,6 @@ function addDataSetGroupByHash(dotColor, xOrigin, yOrigin){
         i++;
         hSet.delete(link);
     });
-    CURRENT_GROUP++;
 }
 
 function generateRandomColour(){
