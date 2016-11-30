@@ -39,7 +39,7 @@ app.post('/', function(req, res) {
     }));
 });
 
-function formDataSets(origin){
+function formDataSets(){
     ds = [];
     var j = 0;
 
@@ -73,7 +73,7 @@ function updatePrices(startIdx) {
             EPOCHS_WAITED = 0;
             addDataSetGroupByHash(generateRandomColour(), Math.random()*ENTIRE_WORLD_SIZE_Y, Math.random()*ENTIRE_WORLD_SIZE_X);
             clearInterval(HASH_ADD_TIMER);
-            ds = formDataSets([req.body.x1, req.body.y1, req.body.x2, req.body.y2]);
+            ds = formDataSets();
         }
         EPOCHS_WAITED++;
         console.log('hset size is --------------' + hSet.size + ' --- epochs ' + EPOCHS_WAITED);
