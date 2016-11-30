@@ -29,7 +29,7 @@ var ENTIRE_WORLD_SIZE_Y = 100;
 
 app.post('/', function(req, res) {
 
-    updatePrices(req.body.personIdx);
+    var ds = updatePrices(req.body.personIdx);
 
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Methods', 'POST');
