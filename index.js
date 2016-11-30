@@ -13,7 +13,7 @@ app.use(bodyParser.json());
 var DATASET = [];
 var hSet = new Set();
 var MAX_HASH = 800;
-var MAX_EPOCH_WAIT = 2;
+var MAX_EPOCH_WAIT = 1;
 
 var EPOCHS_WAITED = 0;
 
@@ -71,9 +71,8 @@ function updatePrices(startIdx) {
     var HASH_ADD_TIMER = setInterval(function(){
         if(hSet.size>MAX_HASH-2 || EPOCHS_WAITED>MAX_EPOCH_WAIT){
             EPOCHS_WAITED = 0;
-            addDataSetGroupByHash(generateRandomColour(), Math.random()*ENTIRE_WORLD_SIZE_Y, Math.random()*ENTIRE_WORLD_SIZE_X);
             clearInterval(HASH_ADD_TIMER);
-            return formDataSets();
+            return addDataSetGroupByHash(generateRandomColour(), Math.random()*ENTIRE_WORLD_SIZE_Y, Math.random()*ENTIRE_WORLD_SIZE_X);
         }
         EPOCHS_WAITED++;
         console.log('hset size is --------------' + hSet.size + ' --- epochs ' + EPOCHS_WAITED);
@@ -115,7 +114,7 @@ function getPeopleOfSimilarInterests(topicKeyword){
 
 
 function addDataSetGroupByHash(dotColor, xOrigin, yOrigin){
-    var i = 30*CURRENT_GROUP;
+    var i = 0;
     console.log('at adding pt' + hSet.size);
     hSet.forEach(function(link){
         console.log(link);
@@ -124,6 +123,7 @@ function addDataSetGroupByHash(dotColor, xOrigin, yOrigin){
         hSet.delete(link);
     });
     CURRENT_GROUP++;
+    return formDataSets();
 }
 
 function generateRandomColour(){
