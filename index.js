@@ -25,21 +25,36 @@ var EPOCH_TIME = 5000;
 var ENTIRE_WORLD_SIZE_X = 60;
 var ENTIRE_WORLD_SIZE_Y = 100;
 
+var dss = [];
 
 
 app.post('/', function(req, res) {
 
-    updatePrices(req.body.personIdx, res);
+    updatePrices(req.body.personIdx);
+
+
+    var HASH_ADD_TIMER = setInterval(function(){
+        if((dss.length>10 && EPOCHS_WAITED>3)||(dss.length>50 && EPOCHS_WAITED>2)){
+            res.header('Access-Control-Allow-Origin', '*');
+            res.header('Access-Control-Allow-Methods', 'POST');
+            res.set('Content-Type', 'text/plain');
+            res.send(JSON.stringify({
+                datasets: dss
+            }));
+        }
+        console.log('request epoch ' + EPOCHS_WAITED + ' AND DSS LENGTH IS ' + dss.length);
+    }, EPOCH_TIME);
+
+
 });
 
-function formDataSets(res){
-    ds = [];
+function formDataSets(){
     var j = 0;
 
     for(var i=0; i<DATASET.length; i++){
         if(DATASET[i]==null){continue;}
 
-        ds[j] = {
+        dss[j] = {
             label: DATASET[i].label,
             data:[{
                 x:DATASET[i].x,
@@ -51,19 +66,12 @@ function formDataSets(res){
         };
         j++;
     }
-
-    res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Methods', 'POST');
-    res.set('Content-Type', 'text/plain');
-    res.send(JSON.stringify({
-        datasets: ds
-    }));
 }
 
 
 
 var SERVER_ADDRESS = "https://oblong-adventures.herokuapp.com";
-function updatePrices(startIdx, res) {
+function updatePrices(startIdx) {
 
     addDataSetGroupByLinkReturnInterest('/api/people/'+startIdx);
 
@@ -71,7 +79,7 @@ function updatePrices(startIdx, res) {
         if(hSet.size>MAX_HASH-2 || EPOCHS_WAITED>MAX_EPOCH_WAIT){
             EPOCHS_WAITED = 0;
             clearInterval(HASH_ADD_TIMER);
-            addDataSetGroupByHash(generateRandomColour(), Math.random()*ENTIRE_WORLD_SIZE_Y, Math.random()*ENTIRE_WORLD_SIZE_X, res);
+            addDataSetGroupByHash(generateRandomColour(), Math.random()*ENTIRE_WORLD_SIZE_Y, Math.random()*ENTIRE_WORLD_SIZE_X);
         }
         EPOCHS_WAITED++;
         console.log('hset size is --------------' + hSet.size + ' --- epochs ' + EPOCHS_WAITED);
@@ -112,7 +120,7 @@ function getPeopleOfSimilarInterests(topicKeyword){
 }
 
 
-function addDataSetGroupByHash(dotColor, xOrigin, yOrigin, res){
+function addDataSetGroupByHash(dotColor, xOrigin, yOrigin){
     var i = 0;
     console.log('at adding pt' + hSet.size);
     hSet.forEach(function(link){
@@ -122,7 +130,7 @@ function addDataSetGroupByHash(dotColor, xOrigin, yOrigin, res){
         hSet.delete(link);
     });
     CURRENT_GROUP++;
-    formDataSets(res);
+    formDataSets();
 }
 
 function generateRandomColour(){
