@@ -43,7 +43,7 @@ app.post('/', function(req, res) {
             dss = [];
         }
         REQUEST_EPOCH++;
-        console.log('request epoch ' + REQUEST_EPOCH + ' AND DATASET LENGTH IS ' + DATASET.length);
+        console.log('request epoch  ' + REQUEST_EPOCH + ' AND DATASET LENGTH IS ' + DATASET.length);
     }, EPOCH_TIME);
 
 
