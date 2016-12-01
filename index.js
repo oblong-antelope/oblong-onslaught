@@ -38,6 +38,7 @@ app.post('/', function(req, res) {
         if((DATASET.length>5 && REQUEST_EPOCH>3)||(DATASET.length>20 && REQUEST_EPOCH>2)||(DATASET.length>60)){
             formDataSets(res);
             clearInterval(REQUEST_TIMER);
+            REQUEST_EPOCH = 0;
         }
         REQUEST_EPOCH++;
         console.log('request epoch ' + REQUEST_EPOCH + ' AND DATASET LENGTH IS ' + DATASET.length);
