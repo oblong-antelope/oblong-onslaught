@@ -107,7 +107,9 @@ function addDataSetGroupByLinkReturnInterest(link){
             var keywords = parBody.keywords;
 
             for(var keys in keywords){
-                getPeopleOfSimilarInterests(keys);
+                if(keywords[keys]>Math.random()*7) {
+                    getPeopleOfSimilarInterests(keys);
+                }
             }
         }catch(e){
             console.log(link + ' failed ' + e);
