@@ -17,7 +17,7 @@ var MAX_EPOCH_WAIT = 4;
 
 var EPOCHS_WAITED = 0;
 
-var TOTAL_GROUPS = 500;
+var TOTAL_GROUPS = 30;
 
 var EPOCH_TIME = 2000;
 
@@ -74,7 +74,7 @@ function formDataSets(res){
     }
 
     res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Methods', 'POST');
+    res.header('Access-Control-Allow-Methods', '*');
     res.set('Content-Type', 'text/plain');
     res.send(JSON.stringify({
         datasets: dss
