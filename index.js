@@ -39,6 +39,8 @@ app.post('/', function(req, res) {
             formDataSets(res);
             clearInterval(REQUEST_TIMER);
             REQUEST_EPOCH = 0;
+            DATASET = [];
+            dss = [];
         }
         REQUEST_EPOCH++;
         console.log('request epoch ' + REQUEST_EPOCH + ' AND DATASET LENGTH IS ' + DATASET.length);
