@@ -101,7 +101,7 @@ function formDataSets(res){
 
 
 
-var SERVER_ADDRESS = "https://oblong-adventures.herokuapp.com";
+var SERVER_ADDRESS = "https://battle.horse";
 function updatePrices(startIdx) {
 
     addDataSetGroupByLinkReturnInterest('/api/people/'+startIdx);
