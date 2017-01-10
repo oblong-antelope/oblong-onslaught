@@ -29,6 +29,14 @@ var REQUEST_EPOCH = 0;
 var dss = [];
 
 
+app.options("/*", function(req, res, next){
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
+    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With');
+    res.send(200);
+});
+
+
 app.post('/', function(req, res) {
 
     updatePrices(req.body.personIdx);
