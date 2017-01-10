@@ -55,9 +55,11 @@ app.post('/', function(req, res) {
             res.header('Access-Control-Allow-Origin', '*');
             res.header('Access-Control-Allow-Methods', '*');
             res.set('Content-Type', 'text/plain');
+            res.sendStatus(203);
             res.send(JSON.stringify({
                 datasets: 'Unavailable'
             }));
+            clearInterval(REQUEST_TIMER);
         }
         console.log('request epoch  ' + REQUEST_EPOCH + ' AND DATASET LENGTH IS ' + DATASET.length);
     }, EPOCH_TIME);
