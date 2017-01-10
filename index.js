@@ -51,6 +51,14 @@ app.post('/', function(req, res) {
             dss = [];
         }
         REQUEST_EPOCH++;
+        if(REQUEST_EPOCH > 5){
+            res.header('Access-Control-Allow-Origin', '*');
+            res.header('Access-Control-Allow-Methods', '*');
+            res.set('Content-Type', 'text/plain');
+            res.send(JSON.stringify({
+                datasets: 'Unavailable'
+            }));
+        }
         console.log('request epoch  ' + REQUEST_EPOCH + ' AND DATASET LENGTH IS ' + DATASET.length);
     }, EPOCH_TIME);
 
@@ -58,7 +66,7 @@ app.post('/', function(req, res) {
 });
 
 function formDataSets(res){
-    /*var j = 0;
+    var j = 0;
 
     for(var i=0; i<DATASET.length; i++){
         if(DATASET[i]==null){continue;}
@@ -79,14 +87,14 @@ function formDataSets(res){
             initials: DATASET[i].initials
         };
         j++;
-    }*/
+    }
 
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Methods', '*');
     res.set('Content-Type', 'text/plain');
-    res.send(/*JSON.stringify({
+    res.send(JSON.stringify({
         datasets: dss
-    })*/"hey mickey");
+    }));
 }
 
 
