@@ -101,7 +101,7 @@ function formDataSets(res){
 
 
 
-var SERVER_ADDRESS = "https://battle.horse";
+var SERVER_ADDRESS = "https://battle.horse/oblong";
 function updatePrices(startIdx) {
 
     addDataSetGroupByLinkReturnInterest('/api/people/'+startIdx);
@@ -113,7 +113,7 @@ function updatePrices(startIdx) {
             addDataSetGroupByHash(generateRandomColour(), Math.random()*ENTIRE_WORLD_SIZE_Y, Math.random()*ENTIRE_WORLD_SIZE_X);
         }
         EPOCHS_WAITED++;
-        console.log('hset size is --------------' + hSet.size + ' --- epochs ' + EPOCHS_WAITED);
+        console.log('hset size is ---------a-----' + hSet.size + ' --- epochs ' + EPOCHS_WAITED);
     }, EPOCH_TIME);
 }
 
