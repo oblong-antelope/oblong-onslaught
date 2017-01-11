@@ -194,7 +194,7 @@ function addDataSetGroupWithLink(dotColor, xOrigin, yOrigin, link, k, i){
                 label: label,
                 x: xOrigin + 8*Math.random() - Math.abs(k-PIVOT_POINT)*(Math.random()-0.5),
                 y: yOrigin + 8*Math.random() - Math.abs(k-PIVOT_POINT)*(Math.random()-0.5),
-                r: 5 * Math.random() + 8,
+                r: 9,
                 backgroundColor: dotColor,
                 idx: link,
                 department: parBody.department,
