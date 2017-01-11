@@ -26,6 +26,8 @@ var ENTIRE_WORLD_SIZE_Y = 100;
 
 var REQUEST_EPOCH = 0;
 
+var PIVOT_POINT = 7; //Assuming Exponential(7, 49) distribution
+
 var dss = [];
 
 
@@ -137,7 +139,7 @@ function addDataSetGroupByLinkReturnInterest(link){
 
             for(var keys in keywords){
                 if(keywords[keys]>Math.random()*7) {
-                    getPeopleOfSimilarInterests(keys);
+                    getPeopleOfSimilarInterests(keys, keywords[keys]);
                 }
             }
         }catch(e){
@@ -146,14 +148,14 @@ function addDataSetGroupByLinkReturnInterest(link){
     });
 }
 
-function getPeopleOfSimilarInterests(topicKeyword){
+function getPeopleOfSimilarInterests(topicKeyword, k){
     console.log(topicKeyword);
     postRequest.get(SERVER_ADDRESS + '/api/keywords/' + topicKeyword, function (err, response, body) {
         try {
             var parBody = JSON.parse(body);
             var t = 0;
             while(parBody.profiles[t]!=null && hSet.size<MAX_HASH) {
-                hSet.add(parBody.profiles[t].link);
+                hSet.add([parBody.profiles[t].link, k]);
                 t++;
             }
         }catch(e){console.log(e);}
@@ -166,7 +168,7 @@ function addDataSetGroupByHash(dotColor, xOrigin, yOrigin){
     console.log('at adding pt' + hSet.size);
     hSet.forEach(function(link){
         console.log(link);
-        addDataSetGroupWithLink(dotColor, xOrigin, yOrigin, link, i);
+        addDataSetGroupWithLink(dotColor, xOrigin, yOrigin, link[0], link[1], i);
         i++;
         hSet.delete(link);
     });
@@ -180,7 +182,7 @@ function generateRandomColour(){
     return col;
 }
 
-function addDataSetGroupWithLink(dotColor, xOrigin, yOrigin, link, i){
+function addDataSetGroupWithLink(dotColor, xOrigin, yOrigin, link, k, i){
     postRequest.get(SERVER_ADDRESS_NOOBLONG + link, function (err, response, body) {
         try {
             var parBody = JSON.parse(body);
@@ -190,8 +192,8 @@ function addDataSetGroupWithLink(dotColor, xOrigin, yOrigin, link, i){
             var label = ' [' + department + '] ' + name;
             DATASET[i] = {
                 label: label,
-                x: xOrigin + 8*Math.random(),
-                y: yOrigin + 8*Math.random(),
+                x: xOrigin + 8*Math.random() - Math.abs(k-PIVOT_POINT)*(Math.random()-0.5),
+                y: yOrigin + 8*Math.random() - Math.abs(k-PIVOT_POINT)*(Math.random()-0.5),
                 r: 5 * Math.random() + 8,
                 backgroundColor: dotColor,
                 idx: link,
