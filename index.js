@@ -40,7 +40,7 @@ app.options("/*", function(req, res, next){
 app.post('/', function(req, res) {
 
 
-    console.log(req);
+    console.log(req.body);
     updatePrices(req.body.personIdx);
 
 
