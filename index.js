@@ -202,7 +202,7 @@ function addDataSetGroupWithLink(dotColor, xOrigin, yOrigin, link, i){
             };
             console.log(i);
         }catch(e){
-            console.log(i + ' failed ' + e);
+            console.log(' ' + SERVER_ADDRESS + link + ' failed ' + e);
         }
     });
 }
