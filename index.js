@@ -109,6 +109,7 @@ function formDataSets(res){
 
 
 var SERVER_ADDRESS = "http://battle.horse/oblong";
+var SERVER_ADDRESS_NOOBLONG = "http://battle.horse";
 function updatePrices(startIdx) {
 
     addDataSetGroupByLinkReturnInterest('/api/people/'+startIdx);
@@ -180,7 +181,7 @@ function generateRandomColour(){
 }
 
 function addDataSetGroupWithLink(dotColor, xOrigin, yOrigin, link, i){
-    postRequest.get(SERVER_ADDRESS + link, function (err, response, body) {
+    postRequest.get(SERVER_ADDRESS_NOOBLONG + link, function (err, response, body) {
         try {
             var parBody = JSON.parse(body);
             var name = parBody.name.title + ' ' + parBody.name.first
@@ -202,7 +203,7 @@ function addDataSetGroupWithLink(dotColor, xOrigin, yOrigin, link, i){
             };
             console.log(i);
         }catch(e){
-            console.log(' ' + SERVER_ADDRESS + link + ' failed ' + e);
+            console.log(' ' + SERVER_ADDRESS_NOOBLONG + link + ' failed ' + e);
         }
     });
 }
