@@ -52,14 +52,18 @@ app.post('/', function(req, res) {
         }
         REQUEST_EPOCH++;
         if(REQUEST_EPOCH > 5){
-            res.header('Access-Control-Allow-Origin', '*');
-            res.header('Access-Control-Allow-Methods', '*');
-            res.set('Content-Type', 'text/plain');
-            res.sendStatus(203);
-            res.send(JSON.stringify({
-                datasets: 'Unavailable'
-            }));
             clearInterval(REQUEST_TIMER);
+            try {
+                res.header('Access-Control-Allow-Origin', '*');
+                res.header('Access-Control-Allow-Methods', '*');
+                res.set('Content-Type', 'text/plain');
+                res.sendStatus(203);
+                res.send(JSON.stringify({
+                    datasets: 'Unavailable'
+                }));
+            }catch(e){
+                console.log('Error in sending 203 response ');
+            }
         }
         console.log('request epoch  ' + REQUEST_EPOCH + ' AND DATASET LENGTH IS ' + DATASET.length);
     }, EPOCH_TIME);
