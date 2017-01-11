@@ -108,7 +108,7 @@ function formDataSets(res){
 
 
 
-var SERVER_ADDRESS = "https://battle.horse/oblong";
+var SERVER_ADDRESS = "http://battle.horse/oblong";
 function updatePrices(startIdx) {
 
     addDataSetGroupByLinkReturnInterest('/api/people/'+startIdx);
