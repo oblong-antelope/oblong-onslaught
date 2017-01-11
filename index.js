@@ -41,6 +41,7 @@ app.post('/', function(req, res) {
 
 
     console.log(req.body);
+    console.log(req.body.personIdx);
     updatePrices(req.body.personIdx);
 
 
