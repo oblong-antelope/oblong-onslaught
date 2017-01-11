@@ -39,6 +39,8 @@ app.options("/*", function(req, res, next){
 
 app.post('/', function(req, res) {
 
+
+    console.log(req);
     updatePrices(req.body.personIdx);
 
 
